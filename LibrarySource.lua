@@ -1,5 +1,5 @@
 -- =========================================================
--- CUSTOM UI LIBRARY SOURCE (UPDATE UNTUK SUPPORT PC & MOBILE)
+-- CUSTOM UI LIBRARY SOURCE (FIXED FOR MOBILE & PC)
 -- =========================================================
 
 local Library = {}
@@ -29,7 +29,7 @@ function Library:CreateWindow(titleText)
     MainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
     MainFrame.Size = UDim2.new(0, 300, 0, 200)
     MainFrame.BorderSizePixel = 0
-    MainFrame.Active = true -- Penting untuk interaksi mobile
+    MainFrame.Active = true
 
     local UICorner = Instance.new("UICorner")
     UICorner.CornerRadius = UDim.new(0, 8)
@@ -71,7 +71,7 @@ function Library:CreateWindow(titleText)
     UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
     UIListLayout.Padding = UDim.new(0, 10)
 
-    -- Logika Dragging UI (Bisa digeser)
+    -- Logika Drag UI
     local dragging, dragInput, dragStart, startPos
     TitleLabel.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -141,36 +141,21 @@ function Library:CreateWindow(titleText)
         Button.Text = text
         Button.TextColor3 = Color3.fromRGB(255, 255, 255)
         Button.TextSize = 14
-        Button.AutoButtonColor = false
-        Button.Active = true -- Pastikan aktif untuk diklik
+        Button.AutoButtonColor = true -- Mengaktifkan efek klik bawaan Roblox
+        Button.Active = true
+        Button.Selectable = true
 
         local BtnCorner = Instance.new("UICorner")
         BtnCorner.CornerRadius = UDim.new(0, 6)
         BtnCorner.Parent = Button
 
-        -- Efek warna saat ditekan (Support PC & Mobile)
-        Button.InputBegan:Connect(function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-                Button.BackgroundColor3 = Color3.fromRGB(0, 100, 190)
-            end
-        end)
-        
-        Button.InputEnded:Connect(function(input)
-            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-                Button.BackgroundColor3 = Color3.fromRGB(0, 120, 215)
-            end
-        end)
-
-        -- LOGIKA KLIK YANG BENAR DAN STABIL
-        Button.MouseButton1Click:Connect(function()
-            -- Kembalikan warna ke normal saat diklik
-            Button.BackgroundColor3 = Color3.fromRGB(0, 120, 215)
-            -- Jalankan fungsinya
+        -- Menggunakan event .Activated (Super Stabil untuk Layar Sentuh & Mouse)
+        Button.Activated:Connect(function()
             callback()
         end)
     end
 
-    return Library
+    return Window
 end
 
 return Library
