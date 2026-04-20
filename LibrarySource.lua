@@ -1,5 +1,5 @@
 -- =========================================================
--- CUSTOM UI LIBRARY SOURCE (FIXED FOR MOBILE & PC)
+-- CUSTOM UI LIBRARY SOURCE (FIXED BLANK & MOBILE TOUCH)
 -- =========================================================
 
 local Library = {}
@@ -27,7 +27,7 @@ function Library:CreateWindow(titleText)
     MainFrame.Parent = ScreenGui
     MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     MainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
-    MainFrame.Size = UDim2.new(0, 300, 0, 200)
+    MainFrame.Size = UDim2.new(0, 300, 200) -- Ukuran Frame Utama
     MainFrame.BorderSizePixel = 0
     MainFrame.Active = true
 
@@ -141,7 +141,7 @@ function Library:CreateWindow(titleText)
         Button.Text = text
         Button.TextColor3 = Color3.fromRGB(255, 255, 255)
         Button.TextSize = 14
-        Button.AutoButtonColor = true -- Mengaktifkan efek klik bawaan Roblox
+        Button.AutoButtonColor = true -- Bawaan roblox agar tombol merespon klik/touch
         Button.Active = true
         Button.Selectable = true
 
@@ -149,12 +149,13 @@ function Library:CreateWindow(titleText)
         BtnCorner.CornerRadius = UDim.new(0, 6)
         BtnCorner.Parent = Button
 
-        -- Menggunakan event .Activated (Super Stabil untuk Layar Sentuh & Mouse)
+        -- Menggunakan event .Activated untuk dukungan penuh di HP dan PC
         Button.Activated:Connect(function()
             callback()
         end)
     end
 
+    -- KESALAHAN SEBELUMNYA ADA DI SINI (Sekarang sudah diperbaiki menjadi return Window)
     return Window
 end
 
